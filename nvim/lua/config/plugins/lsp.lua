@@ -16,6 +16,8 @@ return {
 		},
 		config = function()
 			require("lspconfig").lua_ls.setup{}
+			require("lspconfig").clangd.setup{}
+			require("lspconfig").gopls.setup{}
 			require("lspconfig").basedpyright.setup{
 				basedpyright = {
 					analysis = {
@@ -25,6 +27,7 @@ return {
 			}
 			vim.keymap.set("n", "<leader>]", "<C-]>")
 			vim.keymap.set("n", "<leader>[", "<C-t>")
+			-- Remember you have omnicompletion with C-x C-o, figure out a remap?
 
 		end
 	}
