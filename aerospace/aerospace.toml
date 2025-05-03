@@ -9,9 +9,11 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
+
 after-startup-command = [
+'exec-and-forget borders active_color=0xfff7768e inactive_color=0xff7aa2f7 width=6.0 hidpi=on style=round width=6.0',
+#'exec-and-forget borders'
 'exec-and-forget sketchybar',
-'exec-and-forget borders'
 ]
 
 # Notify Sketchybar about workspace change
