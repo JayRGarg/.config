@@ -1,14 +1,34 @@
 #!/bin/sh
 
+# Add logging
+echo "Starting spaces.sh" >> /tmp/sketchybar.log
+
+# Check if aerospace is running
+if ! command -v aerospace &> /dev/null; then
+    echo "aerospace not found" >> /tmp/sketchybar.log
+    exit 1
+fi
+
+# Wait for aerospace to be ready
+for i in {1..10}; do
+    if aerospace list-monitors &> /dev/null; then
+        echo "aerospace is ready" >> /tmp/sketchybar.log
+        break
+    fi
+    echo "Waiting for aerospace... attempt $i" >> /tmp/sketchybar.log
+    sleep 1
+done
+
 #SPACE_ICONS=("1" "2" "3" "4")
 
 # Destroy space on right click, focus space on left click.
 # New space by left clicking separator (>)
 
 sketchybar --add event aerospace_workspace_change
-#echo $(aerospace list-workspaces --monitor 1 --visible no --empty no) >> ~/aaaa
+echo "Added aerospace_workspace_change event" >> /tmp/sketchybar.log
 
 for m in $(aerospace list-monitors | awk '{print $1}'); do
+  echo "Processing monitor $m" >> /tmp/sketchybar.log
   for i in $(aerospace list-workspaces --monitor $m); do
     sid=$i
     space=(
@@ -55,7 +75,6 @@ for m in $(aerospace list-monitors | awk '{print $1}'); do
   
 done
 
-
 space_creator=(
   icon=􀆊
   icon.font="$FONT:Heavy:16.0"
@@ -63,18 +82,15 @@ space_creator=(
   padding_right=8
   label.drawing=off
   display=active
-  #click_script='yabai -m space --create'
   script="$PLUGIN_DIR/space_windows.sh"
-  #script="$PLUGIN_DIR/aerospace.sh"
   icon.color=$WHITE
 )
 
-# sketchybar --add item space_creator left               \
-#            --set space_creator "${space_creator[@]}"   \
-#            --subscribe space_creator space_windows_change
 sketchybar --add item space_creator left               \
            --set space_creator "${space_creator[@]}"   \
            --subscribe space_creator aerospace_workspace_change
+
+echo "Finished spaces.sh" >> /tmp/sketchybar.log
 
 # sketchybar  --add item change_windows left \
 #             --set change_windows script="$PLUGIN_DIR/change_windows.sh" \
