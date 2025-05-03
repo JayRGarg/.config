@@ -1,3 +1,5 @@
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -15,18 +17,27 @@ return {
 			  },
 		},
 		config = function()
-			require("lspconfig").lua_ls.setup{}
-			require("lspconfig").clangd.setup{}
-			require("lspconfig").gopls.setup{}
+			require("lspconfig").lua_ls.setup{
+				capabilities = lsp_capabilities,
+			}
+			require("lspconfig").clangd.setup{
+				capabilities = lsp_capabilities,
+			}
+			require("lspconfig").gopls.setup{
+				capabilities = lsp_capabilities,
+			}
 			require("lspconfig").basedpyright.setup{
 				basedpyright = {
 					analysis = {
 						typeCheckingMode = "standard",
 					}
-				}
+				},
+				capabilities = lsp_capabilities,
 			}
-			vim.keymap.set("n", "<leader>]", "<C-]>")
-			vim.keymap.set("n", "<leader>[", "<C-t>")
+			-- vim.keymap.set("n", "<leader>]", "<C-]>")
+			-- vim.keymap.set("n", "<leader>[", "<C-t>")
+			vim.keymap.set("n", "]", "<C-]>")
+			vim.keymap.set("n", "[", "<C-t>")
 			-- Remember you have omnicompletion with C-x C-o, figure out a remap?
 
 		end
