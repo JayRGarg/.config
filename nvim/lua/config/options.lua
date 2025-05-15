@@ -10,3 +10,5 @@ function toggle_line_numbers()
 	vim.wo.relativenumber = not vim.wo.relativenumber
 end
 vim.keymap.set("n", "<leader>t", toggle_line_numbers)
+
+vim.opt.clipboard = "unnamedplus"
