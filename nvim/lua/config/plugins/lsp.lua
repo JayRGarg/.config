@@ -1,5 +1,3 @@
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -15,8 +13,11 @@ return {
 				  },
 				},
 			  },
+              "jose-elias-alvarez/null-ls.nvim",
+              "nvim-lua/plenary.nvim", -- Required by null-ls
 		},
 		config = function()
+            local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 			require("lspconfig").lua_ls.setup{
 				capabilities = lsp_capabilities,
 			}
@@ -40,6 +41,19 @@ return {
 			vim.keymap.set("n", "[", "<C-t>")
 			-- Remember you have omnicompletion with C-x C-o, figure out a remap?
 
+            -- Configure null-ls after lspconfig
+            local null_ls = require("null-ls")
+
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.diagnostics.golangci_lint,
+                    -- You can add other linters or formatters here as well, e.g.:
+                    -- null_ls.builtins.formatters.goimports,
+                    -- null_ls.builtins.formatters.gofmt,
+                },
+                -- Optional: Configure filetypes for golangci-lint (defaults to 'go')
+                -- filetypes = { "go" },
+            })
 		end
 	}
 }

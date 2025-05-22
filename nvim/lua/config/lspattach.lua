@@ -10,10 +10,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
 
     -- Jump to the definition
-    -- bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+    bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
     --
     -- -- Jump to declaration
-    -- bufmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
+    bufmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
 
     -- Lists all the implementations for the symbol under the cursor
     bufmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
